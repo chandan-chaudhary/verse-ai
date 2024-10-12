@@ -1,12 +1,19 @@
 'use client'
 import Image from "next/image";
 import logo from '@/public/logo.svg'
-import { CreditCard, History, Home, Settings } from "lucide-react";
+import { CreditCard, History, Home, LogOutIcon, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useClerk, useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 export default function Sidebar() {
 
-
+    const { user } = useUser();
+    const { signOut } = useClerk();
     const path = usePathname();
+
+    const handleLogout = async () => {
+        await signOut();
+    }
 
     const menu = [
         {
@@ -44,6 +51,14 @@ export default function Sidebar() {
                         </div>
                     )
                 }
+            </div>
+
+            <div className="flex flex-col gap-5  pt-52">
+                <Image src={user?.imageUrl!} alt={`${user?.firstName}`} width={60} height={100} className="rounded-full" />
+                <h2 className="text-2xl font-semibold">{user?.fullName}</h2>
+                {/* <div className="flex gap-4"> */}
+                <Button onClick={() => handleLogout()} variant={'default'} className="flex gap-4"> Logout <LogOutIcon /> </Button>
+                {/* </div> */}
             </div>
         </main>
     )

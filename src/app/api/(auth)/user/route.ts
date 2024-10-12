@@ -9,8 +9,8 @@ export const GET = async () => {
     await connect();
     const users = await User.find();
     return new NextResponse(JSON.stringify(users), { status: 200 });
-  } catch (err: any) {
-    return new NextResponse(`Error`, err);
+  } catch (err) {
+    return new NextResponse(`Error`+ err);
   }
 };
 
@@ -22,8 +22,8 @@ export const POST = async (request: Request) => {
     const newUser = new User(body);
     await newUser.save();
     return new NextResponse(JSON.stringify(newUser), { status: 201 });
-  } catch (err: any) {
-    return new NextResponse(`Error`, err);
+  } catch (err) {
+    return new NextResponse(`Error` , err!);
   }
 };
 
@@ -49,7 +49,7 @@ export const PATCH = async (request: Request) => {
     });
     if (!updatedUser) return new NextResponse("Cannot updated user");
     return new NextResponse(JSON.stringify(updatedUser), { status: 201 });
-  } catch (err: any) {
+  } catch (err) {
     return new NextResponse(JSON.stringify({ error: "Error" + err }), {
       status: 500,
     });

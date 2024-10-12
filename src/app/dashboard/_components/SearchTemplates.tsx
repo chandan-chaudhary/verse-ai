@@ -2,11 +2,11 @@
 import { Search } from "lucide-react";
 
 
-// interface PROPS{
-//     searchInput: ()=> void
-// }
+interface PROPS{
+    searchInput: (val:string)=> void
+}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SearchTemplates( searchInput :any) {
+export default function SearchTemplates({ searchInput }: PROPS) {
 
     return (
         <main>

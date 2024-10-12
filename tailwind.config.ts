@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+//  import "tailwindcss-animate"
 const config: Config = {
     darkMode: ["class"],
     content: [
@@ -58,6 +58,7 @@ const config: Config = {
   		}
   	}
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 };
 export default config;
