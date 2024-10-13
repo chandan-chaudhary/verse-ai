@@ -1,5 +1,5 @@
 import connect from "@/db/db";
-import User from "@/db/modals/user";
+import User from "@/db/modals/userSchema";
 import { ObjectId } from "mongodb";
 import { Types } from "mongoose";
 import { NextResponse } from "next/server";

@@ -76,3 +76,49 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* styles/globals.css or in component-specific styles */
+.moving-text-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.moving-text-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.moving-text {
+  font-size: 5rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.1); /* Faint background text */
+  white-space: nowrap;
+  animation: scroll 15s linear infinite;
+}
+
+/* Main content styling */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  background: rgba(0, 0, 0, 0.8); /* Slight dark overlay */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

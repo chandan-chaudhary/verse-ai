@@ -1,4 +1,4 @@
-import { TemplateProps } from "@/templates/template";
+import { TemplateProps } from "@/model/template";
 import Image from "next/image";
 import Link from "next/link";
 

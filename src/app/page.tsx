@@ -1,5 +1,4 @@
 "use client"
-
 import { Button } from "@/components/ui/button";
 // import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
@@ -8,24 +7,32 @@ import Link from "next/link";
 
 
 export default function Home() {
-  
+
   // const {isSignedIn } = useUser();
   //   const router = useRouter();
   //   console.log( isSignedIn);
-  
+
   //   useEffect(()=>{
   //       if(!isSignedIn){ router.push('/');}
   //   },[isSignedIn, router]);
 
   return (
-    <main className="flex flex-col items-center justify-center text-2xl gap-y-8 pt-52">
-      <h1 className="font-bold">Hello, Welcome to AI Era.</h1>
+    <main className="flex flex-col items-center justify-center text-2xl gap-y-8 bg-gray-700 h-screen">
+      <h1 className="font-bold text-5xl text-white">Hello, Welcome to AI Era.</h1>
+      {/* <div className="moving-text-container">
+        <div className="moving-text-content">
+          <div className="moving-text">This is a moving background text</div>
+        </div>
+        <div className="content">
+          <h1>Main Content Here</h1>
+        </div>
+      </div> */}
       <div className="flex gap-5">
         <Link href={'/sign-up'}>
-          <Button variant={"default"}>Sign up</Button>
+          <Button variant={"destructive"}>Sign up</Button>
         </Link>
         <Link href={'/sign-in'}>
-          <Button variant={"default"}>Sign in</Button>
+          <Button variant={"destructive"}>Sign in</Button>
         </Link>
       </div>
     </main>

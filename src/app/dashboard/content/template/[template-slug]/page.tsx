@@ -1,9 +1,9 @@
 "use client"
-import { contentTemplate, FORM, TemplateProps } from "@/templates/template"
+import { contentTemplate, FORM, TemplateProps } from "@/model/template"
 // import { useState } from "react"
 import ContentForm from "../_components/ContentForm";
 import OutputGenerated from "../_components/OutputGenerated";
-import { chatSession } from "@/templates/aiModel";
+import openai from "@/model/aiModel";
 import { useState } from "react";
 
 interface PROPS {
@@ -21,10 +21,20 @@ export default function ContentSlug(props: PROPS) {
         setLoading(true);
         const selectedPrompt = template?.aiPrompt;
         const finalPrompt = JSON.stringify(value) + ' ' + selectedPrompt;
-        const result = await chatSession.sendMessage(finalPrompt);
-        if (result.response.text()) {
-            // console.log(result.response.text());
-            setAIGeneratedResult(result.response.text());
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                // { role: "system", content: "You are a helpful assistant." },
+                {
+                    role: "user",
+                    content: finalPrompt,
+                },
+            ],
+        });
+        // const result = await chatSession.sendMessage(finalPrompt);
+        if (completion.choices[0].message) {
+            console.log(completion.choices[0].message);
+            // setAIGeneratedResult(completion.choices[0].message());
         }
         setLoading(false);
     }

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FORM } from "@/templates/template";
+import { FORM } from "@/model/template";
 import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";

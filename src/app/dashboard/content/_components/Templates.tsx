@@ -1,5 +1,5 @@
 'use client'
-import { TemplateProps, contentTemplate } from "@/templates/template"
+import { TemplateProps, contentTemplate } from "@/model/template"
 import TemplateCard from "./TemplateCard"
 import { useEffect, useState } from "react"
 import { PlusCircleIcon } from "lucide-react"
