@@ -19,14 +19,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center text-2xl gap-y-8 bg-gray-700 h-screen">
       <h1 className="font-bold text-5xl text-white">Hello, Welcome to AI Era.</h1>
-      {/* <div className="moving-text-container">
-        <div className="moving-text-content">
-          <div className="moving-text">This is a moving background text</div>
-        </div>
-        <div className="content">
-          <h1>Main Content Here</h1>
-        </div>
-      </div> */}
       <div className="flex gap-5">
         <Link href={'/sign-up'}>
           <Button variant={"destructive"}>Sign up</Button>

@@ -5,7 +5,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { useUser } from "@clerk/nextjs"
-import { ImageIcon, LogOut } from "lucide-react"
+import { LogOut } from "lucide-react"
 import Image from "next/image";
 
 export default function Headers() {

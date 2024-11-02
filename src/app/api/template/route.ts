@@ -58,6 +58,8 @@ export const POST = async (request: Request) => {
   }
 };
 
+
+//UPDATE TEMPLATE
 export const PATCH = async (request:Request) => {
  // get userid from query
  const { searchParams } = new URL(request.url);
