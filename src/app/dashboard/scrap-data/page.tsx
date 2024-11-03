@@ -1,14 +1,26 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 
 export default function WebScraping() {
     const [searchPrompt, setSearchPrompt] = useState<string>('');
     const [scrapedData, setScrapedData] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    async function scrapeData(url: string) {
+    const [lines, setLines] = useState(['Welcome to scraping world']);
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        inputRef.current && inputRef.current.focus();
+    }, []);
+
+    async function scrapeData(url: string, event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (searchPrompt.trim()) {
+            setLines([...lines, `${searchPrompt}`]);
+            setSearchPrompt('');
+        }
         setLoading(true);
         try {
             if (!url) return alert('Please enter url');
@@ -26,21 +38,33 @@ export default function WebScraping() {
     }
     // https://www.bbc.com/news
     return (
-        <main className="flex flex-col items-center pt-10 gap-5">
-            <div className="flex flex-col  gap-5 border-2 border-white text-green-400 w-7/12 p-8 text-xl rounded-lg">
-                <div className="flex items-center gap-3 ">
-                    <h4 className="w-32">Enter URL $</h4>
-                    <Input value={searchPrompt} onChange={(e) => setSearchPrompt(e.target.value)} placeholder="Enter URI..." className="border-none outline-none bg-inherit focus-visible:ring-0" />
-                </div>
-                <Button onClick={() => scrapeData(searchPrompt)} variant={'default'} className="w-fit">{loading ? 'Loading...' : 'Scrap'}</Button>
-            </div>
-            <div className="lex flex-col  gap-1 border-2 border-white text-green-400 w-7/12 h-96 p-8 text-xl rounded-lg overflow-scroll">
+        <main className="flex flex-col items-center pt-10 gap-5 font-mono">
+            <div onClick={() => inputRef.current.focus()} className="flex flex-col  gap-5 border-2 border-white text-green-400 w-7/12 h-[600px] p-8 text-xl rounded-lg overflow-y-auto shadow-inner">
                 {
-                    scrapedData.map((data, idx) =>
-                        <h1 key={idx} className="font-semibold ">{data}</h1>
+                    lines.map((line, idx) =>
+                        <div key={idx}>{line}</div>
                     )
                 }
+                <form onSubmit={(event) => scrapeData(searchPrompt, event)} className="flex flex-col">
+                    <div>
+                        {/* <h4 className="w-32">Enter URL $</h4> */}
+                        <span className="mr-1">&gt;</span>
+                        <Input type="text" ref={inputRef} value={searchPrompt} onChange={(e) => setSearchPrompt(e.target.value)} placeholder="Enter URI..." className="border-none outline-none bg-inherit focus-visible:ring-0" />
+                    </div>
+                    {
+                        scrapedData.map((data, idx) =>
+                            <h1 key={idx} className="font-semibold ">{data}</h1>
+                        )
+                    }
+                </form>
+
+                {/* <span className="ml-1 w-[10px] animate-blink">|</span> */}
+
+                {/* <Button onClick={() => scrapeData(searchPrompt)} variant={'default'} className="w-fit">{loading ? 'Loading...' : 'Scrap'}</Button> */}
             </div>
+            {/* <div className="flex flex-col  gap-1 border-2 border-white text-green-400 w-7/12 h-96 p-8 text-xl rounded-lg overflow-scroll">
+               
+            </div> */}
         </main>
     )
 }
