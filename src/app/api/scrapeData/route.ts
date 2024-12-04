@@ -42,6 +42,7 @@ export async function GET(request: Request) {
     const $ = cheerio.load(data);
 
     // Example: Scrape the main headlines (adjust the selector based on the website structure)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const headlines:any = [];
     $("a").each((index, element) => {
       const headline = $(element).text();

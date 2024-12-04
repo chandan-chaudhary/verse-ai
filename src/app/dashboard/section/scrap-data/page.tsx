@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client'
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import axios from 'axios';
 
 export default function WebScraping() {
@@ -10,10 +11,11 @@ export default function WebScraping() {
     const [loading, setLoading] = useState<boolean>(false);
     const [lines, setLines] = useState(['Welcome to scraping world']);
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        inputRef.current && inputRef.current.focus();
-    }, []);
+    console.log(loading);
+    
+    // useEffect(() => {
+    //     inputRef.current && inputRef?.current?.focus();
+    // }, []);
 
     async function scrapeData(url: string, event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -39,7 +41,7 @@ export default function WebScraping() {
     // https://www.bbc.com/news
     return (
         <main className="flex flex-col items-center pt-10 gap-5 font-mono">
-            <div onClick={() => inputRef.current.focus()} className="flex flex-col  gap-5 border-2 border-white text-green-400 w-7/12 h-[600px] p-8 text-xl rounded-lg overflow-y-auto shadow-inner">
+            <div onClick={() =>''} className="flex flex-col  gap-5 border-2 border-white text-green-400 w-7/12 h-[600px] p-8 text-xl rounded-lg overflow-y-auto shadow-inner">
                 {
                     lines.map((line, idx) =>
                         <div key={idx}>{line}</div>

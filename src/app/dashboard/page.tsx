@@ -31,7 +31,7 @@ export default function Dashboard() {
                             <Instagram />
                             <Text />
                         </div>
-                        <Link href={'/dashboard/content'} className="w-fit self-center mt-8">
+                        <Link href={'/dashboard/section/content'} className="w-fit self-center mt-8">
                             <Button variant={'default'}>Get started</Button>
                         </Link>
                     </CardContent>
@@ -53,7 +53,7 @@ export default function Dashboard() {
                             <Instagram />
                             <Text />
                         </div>
-                        <Link href={'/dashboard/interview'} className="w-fit self-center mt-8">
+                        <Link href={'/dashboard/section/interview'} className="w-fit self-center mt-8">
                             <Button variant={'default'} >Get started</Button>
                         </Link>
                     </CardContent>
@@ -80,7 +80,7 @@ export default function Dashboard() {
                             <Instagram />
                             <Text />
                         </div>
-                        <Link href={'/dashboard/scrap-data'} className="w-fit self-center mt-8">
+                        <Link href={'/dashboard/section/scrap-data'} className="w-fit self-center mt-8">
                             <Button variant={'default'} >Get started</Button>
                         </Link>
                     </CardContent>

@@ -35,6 +35,8 @@ export default function ContentSlug(props: PROPS) {
         if (completion.choices[0].message) {
             console.log(completion.choices[0].message);
             // setAIGeneratedResult(completion.choices[0].message());
+            setAIGeneratedResult('completion.choices[0].message()');
+
         }
         setLoading(false);
     }

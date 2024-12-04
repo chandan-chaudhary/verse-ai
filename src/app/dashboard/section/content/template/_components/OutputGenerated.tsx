@@ -3,14 +3,15 @@ import { Button } from '@/components/ui/button';
 // import '@toast-ui/editor/dist/toastui-editor.css';
 // import { Editor } from '@toast-ui/react-editor';
 import { Copy } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+// import { useEffect, useRef } from 'react';
 
 
 interface PROPS{
     aiGeneratedResult: string;
 }
 export default function OutputGenerated({ aiGeneratedResult }: PROPS) {
-
+        console.log(aiGeneratedResult);
+        
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // const editorRef: any = useRef(null);
 

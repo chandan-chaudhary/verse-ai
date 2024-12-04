@@ -1,4 +1,5 @@
 "use client"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
     Menubar,
     MenubarMenu,
@@ -6,7 +7,7 @@ import {
 } from "@/components/ui/menubar"
 import { useUser } from "@clerk/nextjs"
 import { LogOut } from "lucide-react"
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Headers() {
     const { user } = useUser();
@@ -17,7 +18,7 @@ export default function Headers() {
     return (
         <main className="  w-full items-center justify-center ">
             {/* <div className="w-full items-center justify-center"> */}
-            <Menubar className="py-8 rounded-full mx-96 bg-gray-300">
+            <Menubar className="py-8 rounded-full mx-96 bg-gray-300 text-black">
                 <MenubarMenu>
                     <div className="flex items-center gap-8">
                         {
@@ -26,7 +27,12 @@ export default function Headers() {
                             )
                         }
                         <div className="flex ">
-                            <Image src={user?.imageUrl} alt="" width={40} height={100} className="rounded-full" />
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+
+                            {/* <Image src={user?.imageUrl} alt="" width={40} height={100} className="rounded-full" /> */}
                             <MenubarTrigger className="flex gap-5 font-semibold text-2xl"> {user?.firstName}</MenubarTrigger>
                             <MenubarTrigger > <LogOut className="size-8" /></MenubarTrigger>
                         </div>
