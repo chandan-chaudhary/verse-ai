@@ -1,8 +1,8 @@
-import Headers from "./_components/Headers";
+import Headers from "../_components/Headings";
 import Sidebar from "./_components/Sidebar";
 
 
-export default function DashboardLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default function SectionLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <div>
             <div className='md:w-80 hidden md:block fixed'>

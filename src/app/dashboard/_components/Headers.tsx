@@ -16,7 +16,7 @@ export default function Headers() {
         'Home', 'About', 'Billings', 'Credits', 'History',
     ]
     return (
-        <main className="  w-full items-center justify-center ">
+        <main className="  w-full items-center justify-center pt-12 ">
             {/* <div className="w-full items-center justify-center"> */}
             <Menubar className="py-8 rounded-full mx-96 bg-gray-300 text-black">
                 <MenubarMenu>

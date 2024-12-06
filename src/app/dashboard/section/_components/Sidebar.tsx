@@ -44,7 +44,7 @@ export default function Sidebar() {
     };
 
     return (
-        <main className="h-screen p-5 border-2">
+        <main className="h-screen p-5 bg-zinc-800 rounded-lg">
             <div className="flex justify-center">
                 <Image src={logo} alt="LOGO" width={80} height={100} />
             </div>

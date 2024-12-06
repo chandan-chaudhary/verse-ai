@@ -4,14 +4,18 @@ import { Button } from '@/components/ui/button';
 // import { Editor } from '@toast-ui/react-editor';
 import { Copy } from 'lucide-react';
 // import { useEffect, useRef } from 'react';
+import "react-quill/dist/quill.snow.css";
 
+import dynamic from 'next/dynamic';
 
-interface PROPS{
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
+interface PROPS {
     aiGeneratedResult: string;
 }
 export default function OutputGenerated({ aiGeneratedResult }: PROPS) {
-        console.log(aiGeneratedResult);
-        
+    console.log(aiGeneratedResult);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // const editorRef: any = useRef(null);
 
@@ -20,11 +24,17 @@ export default function OutputGenerated({ aiGeneratedResult }: PROPS) {
     //     editorInstance.setMarkdown(aiGeneratedResult);
     // }, [aiGeneratedResult])
     return (
-        <main className='bg-white rounded-lg border-2 drop-shadow-2xl'>
+        <main className='bg-zinc-800 rounded-lg drop-shadow-2xl'>
             <div className='flex justify-between items-center py-6 px-12'>
                 <h4 className='text-xl font-semibold'>Your Result</h4>
                 <Button className='uppercase font-semibold'><Copy />&nbsp;&nbsp; copy</Button>
             </div>
+            <ReactQuill
+                value={aiGeneratedResult}
+                // onChange={''}
+                theme="snow"
+                className="mt-4"
+            />
             {/* <Editor
                 ref={editorRef}
                 initialValue="Result will be displayed here"

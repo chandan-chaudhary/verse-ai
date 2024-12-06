@@ -31,11 +31,11 @@ export default function Templates({ searchValue }: PROPS) {
         <main className="flex flex-col">
 
             <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-8 p-5 h-[700px] overflow-scroll ">
-                <div className=" text-black bg-blue-50 border-2 drop-shadow-2xl rounded-lg hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer ">
+                <div className=" text-white bg-zinc-700 drop-shadow-2xl rounded-lg hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer ">
                     <div onClick={() => handleOpenCreateTemplate()} className="flex flex-col gap-y-3 items-center justify-center h-full w-full ">
                         <h4 className="text-xl font-semibold text-center"> Create your own template</h4>
                         <Dialog >
-                            <DialogTrigger><PlusCircleIcon className="text-black size-16" />  </DialogTrigger>
+                            <DialogTrigger><PlusCircleIcon className="text-blue-600 size-16" />  </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
                                     <DialogTitle>

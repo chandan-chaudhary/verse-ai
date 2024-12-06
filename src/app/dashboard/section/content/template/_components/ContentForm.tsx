@@ -14,14 +14,14 @@ export default function ContentForm({ template , userFormInput, loading}: any) {
         event.preventDefault();
         userFormInput(formData);
     }
-    console.log(formData);
+    console.log(formData, template);
 
     function handleChange(event: any) {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value })
     }
     return (
-        <main className=" p-5 border-2 drop-shadow-2xl rounded-lg h-fit bg-white">
+        <main className=" p-5 drop-shadow-2xl rounded-lg h-fit bg-zinc-800">
             <div className="flex flex-col gap-y-3">
                 <Image src={template.icon} alt="" width={70} height={50} />
                 <h4 className="text-xl font-bold">{template.name}</h4>
@@ -34,10 +34,10 @@ export default function ContentForm({ template , userFormInput, loading}: any) {
                             <label className="text-xl font-semibold" htmlFor={formField.name}>{formField.label}</label>
                             {
                                 formField.field === 'input' ?
-                                    <Input name={formField.name} placeholder="content for..." onChange={(e) => handleChange(e)} className="text-lg font-semibold" />
+                                    <Input name={formField.name} placeholder="content for..." onChange={(e) => handleChange(e)} className="text-lg font-semibold bg-zinc-600 outline-none border-none" />
                                     :
                                     formField.field === 'textarea' ?
-                                        <Textarea  name={formField.name} placeholder="hint us on your content..." onChange={(e) => handleChange(e)} className="h-52 text-lg font-semibold" />
+                                        <Textarea  name={formField.name} placeholder="hint us on your content..." onChange={(e) => handleChange(e)} className="h-52 text-lg font-semibold  bg-zinc-600 outline-none border-none" />
                                         :
                                         null
                             }
