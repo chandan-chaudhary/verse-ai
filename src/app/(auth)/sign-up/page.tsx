@@ -26,7 +26,7 @@ export default function SignupPage() {
         },
     });
 
-    const onSubmit = async(data: SignupFormValues) => {
+    const onSubmit = async (data: SignupFormValues) => {
         console.log("Form Submitted:", data);
         // Add your API call here
         try {
@@ -42,14 +42,14 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <div className="flex justify-center items-center min-h-screen">
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle>Sign Up</CardTitle>
                 </CardHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <CardContent>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className=" text-white">
+                        <CardContent className="space-y-4">
                             {/* Email Field */}
                             <FormField
                                 control={form.control}
@@ -95,7 +95,8 @@ export default function SignupPage() {
                                 )}
                             />
                         </CardContent>
-                        <CardFooter className="flex justify-end">
+                        <CardFooter className="flex justify-between">
+                            <Button variant={'link'} onClick={() => router.push('/sign-in')} className="text-white">Already have an account?</Button>
                             <Button type="submit">Sign Up</Button>
                         </CardFooter>
                     </form>

@@ -9,11 +9,13 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { signinSchema } from "@/types/schemaTypes";
 import { signIn } from 'next-auth/react';
-
+import { useRouter } from "next/navigation";
 
 type SignInFormValues = z.infer<typeof signinSchema>;
 
 export default function SignInPage() {
+    const router = useRouter();
+
     const form = useForm<SignInFormValues>({
         resolver: zodResolver(signinSchema),
         defaultValues: {
@@ -28,20 +30,24 @@ export default function SignInPage() {
         const signInData = await signIn('credentials', {
             email: data.email,
             password: data.password,
+            redirect: false,
         });
-        console.log(signInData);
-
+        if (signInData?.status === 401 || signInData?.error) {
+            console.log(signInData?.error, signInData?.status);
+        } else {
+            router.push('/dashboard');
+        }
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <div className="flex justify-center items-center min-h-screen text-white">
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
                 </CardHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <CardContent>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className=" text-white">
+                        <CardContent className="space-y-4">
                             {/* Email Field */}
                             <FormField
                                 control={form.control}
@@ -72,7 +78,8 @@ export default function SignInPage() {
                                 )}
                             />
                         </CardContent>
-                        <CardFooter className="flex justify-end">
+                        <CardFooter className="flex justify-between">
+                            <Button variant={'link'} onClick={() => router.push('/sign-up')} className="text-white" >Create an account</Button>
                             <Button type="submit">Sign In</Button>
                         </CardFooter>
                     </form>

@@ -35,7 +35,7 @@ export default function Templates({ searchValue }: PROPS) {
                     <div onClick={() => handleOpenCreateTemplate()} className="flex flex-col gap-y-3 items-center justify-center h-full w-full ">
                         <h4 className="text-xl font-semibold text-center"> Create your own template</h4>
                         <Dialog >
-                            <DialogTrigger><PlusCircleIcon className="text-blue-600 size-16" />  </DialogTrigger>
+                            <DialogTrigger><PlusCircleIcon className="text-white size-12" />  </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
                                     <DialogTitle>
@@ -51,10 +51,6 @@ export default function Templates({ searchValue }: PROPS) {
                                             <Button variant={'default'}>Add Template</Button>
                                         </form>
                                     </DialogTitle>
-                                    {/* <DialogDescription>
-                                        This action cannot be undone. This will permanently delete your account
-                                        and remove your data from our servers.
-                                    </DialogDescription> */}
                                 </DialogHeader>
                             </DialogContent>
                         </Dialog>

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -17,7 +16,7 @@ export default function Dashboard() {
             <Headers />
             <main className="">
                 <div className="grid grid-cols-2 gap-8 pt-24 place-items-center justify-items-center">
-                    <Card className="shadow-2xl w-8/12">
+                    <Card className="shadow-2xl w-8/12 ">
                         <CardHeader>
                             <CardTitle>Generate AI Content</CardTitle>
                             <CardDescription>Create Content based on Your ideas, ask question, generate content for your purpose</CardDescription>
@@ -34,7 +33,7 @@ export default function Dashboard() {
                                 <Instagram />
                                 <Text />
                             </div>
-                            <Link href={'/dashboard/section/content'} className="w-fit self-center mt-8">
+                            <Link href={'/dashboard/content'} className="w-fit self-center mt-8">
                                 <Button variant={'default'}>Get started</Button>
                             </Link>
                         </CardContent>
@@ -56,13 +55,10 @@ export default function Dashboard() {
                                 <Instagram />
                                 <Text />
                             </div>
-                            <Link href={'/dashboard/section/interview'} className="w-fit self-center mt-8">
+                            <Link href={'/dashboard/interview'} className="w-fit self-center mt-8">
                                 <Button variant={'default'} >Get started</Button>
                             </Link>
                         </CardContent>
-                        {/* <CardFooter>
-                    <p>Card Footer</p>
-                </CardFooter> */}
                     </Card>
 
                     {/* WEB SCRAPING */}
@@ -83,13 +79,10 @@ export default function Dashboard() {
                                 <Instagram />
                                 <Text />
                             </div>
-                            <Link href={'/dashboard/section/scrap-data'} className="w-fit self-center mt-8">
+                            <Link href={'/dashboard/scrap-data'} className="w-fit self-center mt-8">
                                 <Button variant={'default'} >Get started</Button>
                             </Link>
                         </CardContent>
-                        {/* <CardFooter>
-                    <p>Card Footer</p>
-                </CardFooter> */}
                     </Card>
                 </div>
 

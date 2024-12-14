@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+'use client'
+
+// import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-// import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,10 +16,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Ai-generator",
-  description: "Create and build content for you daily usage",
-};
+// export const metadata: Metadata = {
+//   title: "Ai-generator",
+//   description: "Create and build content for you daily usage",
+// };
 
 export default function RootLayout({
   children,
@@ -25,15 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <SessionProvider session={session}>
+    <SessionProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-900 text-white`}
         >
           {children}
-          
         </body>
       </html>
-    // </SessionProvider>
+   </SessionProvider>
   );
 }

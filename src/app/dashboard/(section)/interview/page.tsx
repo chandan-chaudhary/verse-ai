@@ -59,34 +59,37 @@ export default function InterView() {
     { id: 5, name: 'Data Structures and Algorithms' },
   ];
   return (
-    <main className='bg-zinc-800 text-white'>
+    <main className=''>
+      <div className='w-full flex items-center justify-center text-5xl font-mono py-5'>
+        <h3>Mock Interview</h3>
+      </div>
       <div className="p-4">
         {/* CARD TO FILL INTERVIEW PROCESS */}
         <div className='grid grid-cols-3 gap-12'>
           <Card
             onClick={openDialog}
-            className="cursor-pointer p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-4 hover:bg-blue-50"
+            className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-4 hover:bg-zinc-800"
           >
-            <PlusIcon className="w-6 h-6 text-blue-500" />
-            <span className="text-blue-500 font-semibold">Add jobs cretria</span>
+            <PlusIcon className="w-6 h-6 text-white" />
+            <span className="text-white font-semibold">Add jobs cretria</span>
           </Card>
           {topics.map((topic) => (
             <Card
               key={topic.id}
-              className="cursor-pointer p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col gap-y-4 items-center space-x-4"
+              className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col gap-y-4 items-center space-x-4"
             >
               <div className=' flex items-center gap-x-3'>
                 {inProgress[topic.name] ? (
                   <div className="w-6 h-6 animate-spin border-4 border-t-4 border-blue-500 border-solid rounded-full" /> // Loading spinner
                 ) : (
-                  <PlayIcon className="w-6 h-6 text-blue-500" />
+                  <PlayIcon className="w-6 h-6 text-white" />
                 )}
-                <span className="text-blue-500 font-semibold">{topic.name}</span>
+                <span className="text-white font-semibold">{topic.name}</span>
               </div>
               <Button
                 // onClick={() => handleStart(topic.name)}
                 onClick={() => handleStart(topic.name)}
-                className="ml-auto bg-blue-500 hover:bg-blue-600 text-white"
+                className="ml-auto"
               >
                 {inProgress[topic.name] ? 'In Progress' : 'Start'}
               </Button>
