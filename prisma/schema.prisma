@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Template {
-  id          Int      @unique @default(autoincrement())
+  id          Int      @id @unique @default(autoincrement())
   title       String
   description String
   userId      Int
@@ -30,4 +30,12 @@ model User {
   template  Template[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+}
+
+model Chatdata {
+  id         Int      @unique @default(autoincrement())
+  vectordata Float[]
+  metadata   Json
+  creadtedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
