@@ -22,14 +22,13 @@ export default function Headers() {
          router.push('/sign-in');
 
     return (
-        <main className="  w-full items-center justify-center pt-12 ">
-            {/* <div className="w-full items-center justify-center"> */}
-            <Menubar className="py-8 rounded-full mx-96 bg-zinc-600 border-none">
+        <main className="pt-12 ">
+            <Menubar className="py-6 rounded-full w-fit bg-gray-50 bg-opacity-25 border-none text-black backdrop-blur-3xl">
                 <MenubarMenu>
                     <div className="flex items-center gap-8">
                         {
                             headers.map((header, idx) =>
-                                <h1 key={idx} className="hover:bg-black hover:text-white text-xl font-semibold px-4 py-2 rounded-full">{header}</h1>
+                                <h1 key={idx} className="cursor-pointer hover:underline text-lg px-4 py-2 rounded-full">{header}</h1>
                             )
                         }
                         <div className="flex ">

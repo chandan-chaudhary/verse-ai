@@ -21,7 +21,7 @@ export default function ContentForm({ template , userFormInput, loading}: any) {
         setFormData({ ...formData, [name]: value })
     }
     return (
-        <main className=" p-5 drop-shadow-2xl rounded-lg h-fit bg-zinc-800">
+        <main className=" p-5 drop-shadow-2xl rounded-lg h-fi">
             <div className="flex flex-col gap-y-3">
                 <Image src={template.icon} alt="" width={70} height={50} />
                 <h4 className="text-xl font-bold">{template.name}</h4>
@@ -34,10 +34,10 @@ export default function ContentForm({ template , userFormInput, loading}: any) {
                             <label className="text-xl font-semibold" htmlFor={formField.name}>{formField.label}</label>
                             {
                                 formField.field === 'input' ?
-                                    <Input name={formField.name} placeholder="content for..." onChange={(e) => handleChange(e)} className="text-lg font-semibold bg-zinc-600 outline-none border-none" />
+                                    <Input name={formField.name} placeholder="content for..." onChange={(e) => handleChange(e)} className="text-lg font-semibold bg-grayg-50 outline-none border-none" />
                                     :
                                     formField.field === 'textarea' ?
-                                        <Textarea  name={formField.name} placeholder="hint us on your content..." onChange={(e) => handleChange(e)} className="h-52 text-lg font-semibold  bg-zinc-600 outline-none border-none" />
+                                        <Textarea  name={formField.name} placeholder="hint us on your content..." onChange={(e) => handleChange(e)} className="h-52 text-lg font-semibold  bg-grayg-50 outline-none border-none" />
                                         :
                                         null
                             }

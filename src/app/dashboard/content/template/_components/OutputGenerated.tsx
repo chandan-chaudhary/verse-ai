@@ -24,7 +24,7 @@ export default function OutputGenerated({ aiGeneratedResult }: PROPS) {
     //     editorInstance.setMarkdown(aiGeneratedResult);
     // }, [aiGeneratedResult])
     return (
-        <main className='bg-zinc-800 rounded-lg drop-shadow-2xl'>
+        <main className=' rounded-lg drop-shadow-2xl'>
             <div className='flex justify-between items-center py-6 px-12'>
                 <h4 className='text-xl font-semibold'>Your Result</h4>
                 <Button className='uppercase font-semibold'><Copy />&nbsp;&nbsp; copy</Button>

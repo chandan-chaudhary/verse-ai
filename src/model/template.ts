@@ -20,27 +20,6 @@ export interface FORM {
 
 export const contentTemplate: TemplateProps[] = [
     {
-        name:'Twitter Post Content',
-        description: 'It generate content for youy twitter handler',
-        category: 'Social-media',
-        icon: '',
-        slug: 'generate-twitter-post',
-        aiPrompt: 'Suggest to write Twitter post based on impact developer see whne creating project on nextjs',
-        form: [
-            {
-                label:'Enter your twitter content for',
-                name: 'title',
-                field: 'input',
-                required:true
-            },
-            {
-                label:'describe  your twitter content outline',
-                name: 'outline',
-                field: 'textarea',
-            }
-        ]
-    },
-    {
         name:'Blog Title',
         description:'An AI tool that generate blog title depends on yout blog information',
         category:'Blog',
@@ -180,6 +159,27 @@ export const contentTemplate: TemplateProps[] = [
                 field: 'textarea',
                 name: 'article',
                 required:true
+            }
+        ]
+    },
+    {
+        name:'Twitter Post Content',
+        description: 'It generate content for youy twitter handler',
+        category: 'Social-media',
+        icon: '',
+        slug: 'generate-twitter-post',
+        aiPrompt: 'Suggest to write Twitter post based on impact developer see whne creating project on nextjs',
+        form: [
+            {
+                label:'Enter your twitter content for',
+                name: 'title',
+                field: 'input',
+                required:true
+            },
+            {
+                label:'describe  your twitter content outline',
+                name: 'outline',
+                field: 'textarea',
             }
         ]
     },

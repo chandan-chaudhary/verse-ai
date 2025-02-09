@@ -64,7 +64,7 @@ export default function ContentSlug(props: PROPS) {
 
 
     return (
-        <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-zinc-900 h-screen p-5">
+        <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-50 bg-opacity-30 h-screen p-5">
             <ContentForm template={template} userFormInput={(value: FORM) => fetchAIResponse(value)} loading={loading} />
             <OutputGenerated aiGeneratedResult={aiGenerateResult} />
         </main>
