@@ -1,26 +1,40 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client'
-// import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {  useRef, useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
+import { Button } from "@/components/ui/button";
+import { SendIcon } from "lucide-react";
 
 export default function WebScraping() {
     const [searchPrompt, setSearchPrompt] = useState<string>('');
+    const [userQuestion, setUserQuestion] = useState<string>('');
+
     const [scrapedData, setScrapedData] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [lines, setLines] = useState(['Welcome to scraping world']);
-    const inputRef = useRef(null);
-    console.log(loading);
-    
+    const [urls, setUrls] = useState<string[]>([]);
+    const [lines, setLines] = useState(['Welcome to scraping world, https://www.bbc.com/news']);
+    // const inputRef = useRef(null);
+
     // useEffect(() => {
     //     inputRef.current && inputRef?.current?.focus();
     // }, []);
 
+    async function answerQuestions(question: string, event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (question.trim()) {
+            setLines([...lines, 'user: ' + question]);
+            setScrapedData([...scrapedData, 'agent: ' + question]);
+            setUserQuestion('');
+        }
+    }
+
     async function scrapeData(url: string, event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (searchPrompt.trim()) {
-            setLines([...lines, `${searchPrompt}`]);
+
+        if (url.trim()) {
+            setUrls([...urls, url]);
             setSearchPrompt('');
         }
         setLoading(true);
@@ -40,33 +54,68 @@ export default function WebScraping() {
     }
     // https://www.bbc.com/news
     return (
-        <main className="flex flex-col items-center pt-10 gap-5 font-mono">
-            <div onClick={() =>''} className="flex flex-col  gap-5 border-2 border-white text-green-400 w-7/12 h-[600px] p-8 text-xl rounded-lg overflow-y-auto shadow-inner">
-                {
-                    lines.map((line, idx) =>
-                        <div key={idx}>{line}</div>
-                    )
-                }
-                <form onSubmit={(event) => scrapeData(searchPrompt, event)} className="flex flex-col">
-                    <div>
-                        {/* <h4 className="w-32">Enter URL $</h4> */}
-                        <span className="mr-1">&gt;</span>
-                        <Input type="text" ref={inputRef} value={searchPrompt} onChange={(e) => setSearchPrompt(e.target.value)} placeholder="Enter URI..." className="border-none outline-none bg-inherit focus-visible:ring-0" />
-                    </div>
-                    {
-                        scrapedData.map((data, idx) =>
-                            <h1 key={idx} className="font-semibold ">{data}</h1>
-                        )
-                    }
+        <main className="flex gap-4 p-4 w-full ">
+            {/* History and Add New URL Section */}
+            <div className="flex flex-col bg-gray-800 text-white p-4 rounded-lg shadow-lg h-[700px] overflow-y-scroll w-[500px]">
+                <h2 className="text-2xl font-bold mb-4">Scrape URL</h2>
+                <form onSubmit={(event) => {
+                    event.preventDefault();
+                    scrapeData(searchPrompt, event);
+                }} className="flex flex-col gap-4 mb-4">
+                    <Input
+                        type="text"
+                        value={searchPrompt}
+                        onChange={(e) => setSearchPrompt(e.target.value)}
+                        placeholder="Enter URL..."
+                        className="border border-gray-300 bg-gray-800 text-white rounded-lg p-2"
+                    />
+                    <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center justify-center">
+                        {loading ? "Processing..." : 'Scrape'}
+                    </Button>
                 </form>
-
-                {/* <span className="ml-1 w-[10px] animate-blink">|</span> */}
-
-                {/* <Button onClick={() => scrapeData(searchPrompt)} variant={'default'} className="w-fit">{loading ? 'Loading...' : 'Scrap'}</Button> */}
+                <div className="flex flex-col gap-2 overflow-y-auto">
+                    <h3 className="text-xl font-semibold mb-2">History</h3>
+                    {urls.map((url, idx) => (
+                        <div key={idx} className="bg-gray-700 p-2 rounded-lg">
+                            {url}
+                        </div>
+                    ))}
+                </div>
+                {/* <div className="flex flex-col gap-2 overflow-y-auto">
+                    <h3 className="text-xl font-semibold mb-2">History</h3>
+                    {scrapedData.map((data, idx) => (
+                        <div key={idx} className="bg-gray-700 p-2 rounded-lg">
+                            {data}
+                        </div>
+                    ))}
+                </div> */}
             </div>
-            {/* <div className="flex flex-col  gap-1 border-2 border-white text-green-400 w-7/12 h-96 p-8 text-xl rounded-lg overflow-scroll">
-               
-            </div> */}
+            {/* Terminal Section */}
+            <div className="flex flex-col bg-black text-green-400 p-4 rounded-lg shadow-lg w-full">
+                <div className="flex flex-col gap-2 overflow-y-auto flex-grow">
+                    {/* {lines.map((line, idx) => ( */}
+                        <div >{lines[lines.length -1]}</div>
+                    {/* // ))} */}
+                      {/* {scrapedData.map((data, idx) => (
+                        <div key={idx} className="bg-gray-700 p-2 rounded-lg"> */}
+                            {scrapedData[scrapedData.length -1]}
+                        {/* </div> */}
+                    {/* ))} */}
+                </div>
+                <form onSubmit={(event) => answerQuestions(userQuestion, event)} className="flex bg-gray-800 rounded-xl p-4 items-center gap-2 mt-auto">
+                    <span className="mr-1 text-green-400">&gt;</span>
+                    <Input
+                        type="text"
+                        value={userQuestion}
+                        onChange={(e) => setUserQuestion(e.target.value)}
+                        placeholder="Enter URL..."
+                        className="border-none outline-none bg-inherit focus-visible:ring-0 text-green-400 flex-grow"
+                    />
+                    <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center">
+                        <SendIcon className="w-5 h-5" />
+                    </Button>
+                </form>
+            </div>
         </main>
     )
 }
