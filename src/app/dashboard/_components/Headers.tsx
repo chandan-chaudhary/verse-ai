@@ -16,10 +16,14 @@ export default function Headers() {
     const router = useRouter();
 
     const headers = [
-        'Home', 'About', 'Billings', 'Credits', 'History',
+        { name: 'Home', path: '/dashboard' },
+        { name: 'About', path: '/about' },
+        { name: 'Billings', path: '/billings' },
+        { name: 'Credits', path: '/credits' },
+        { name: 'History', path: '/history' },
     ]
     if (status === 'unauthenticated')
-         router.push('/sign-in');
+        router.push('/sign-in');
 
     return (
         <main className="pt-12 ">
@@ -28,7 +32,7 @@ export default function Headers() {
                     <div className="flex items-center gap-8">
                         {
                             headers.map((header, idx) =>
-                                <h1 key={idx} className="cursor-pointer hover:underline text-lg px-4 py-2 rounded-full">{header}</h1>
+                                <h1 key={idx} onClick={() => router.push(header.path)} className="cursor-pointer hover:underline text-lg px-4 py-2 rounded-full">{header.name}</h1>
                             )
                         }
                         <div className="flex ">
@@ -40,7 +44,7 @@ export default function Headers() {
                             </MenubarTrigger>
                             <MenubarContent className="flex gap-4">
                                 <MenubarItem className="flex gap-5 font-semibold text-2xl"> {session?.user?.email}</MenubarItem>
-                                <MenubarItem onClick={()=> signOut()} > <LogOut className="size-8" /></MenubarItem>
+                                <MenubarItem onClick={() => signOut()} > <LogOut className="size-8" /></MenubarItem>
                             </MenubarContent>
                         </div>
                     </div>
