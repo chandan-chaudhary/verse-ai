@@ -11,46 +11,55 @@ import axios from 'axios';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+// import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+
+interface InterviewData {
+  id: number;
+  experience: string;
+  description: string;
+  role: string;
+  user?: {
+    email: string
+  }
+}
 
 const formDataSchema = z.object({
-  name: z.string().nonempty({ message: "Name is required" }),
-  email: z.string().email({ message: "Invalid email address" }),
   experience: z.string().nonempty({ message: "Experience is required" }),
-  jobDescription: z.string().nonempty({ message: "Job description is required" }),
+  description: z.string().nonempty({ message: "Job description is required" }),
   role: z.string().nonempty({ message: "Role is required" }),
-  language: z.string().nonempty({ message: "Language is required" }),
 });
 
 export default function InterviewPage() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [interviewData, setInterviewData] = useState<InterviewData[]>([]);
   const router = useRouter();
+
+  const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof formDataSchema>>({
     resolver: zodResolver(formDataSchema),
     defaultValues: {
-      name: "",
-      email: "",
       experience: "",
-      jobDescription: "",
+      description: "",
       role: "",
-      language: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formDataSchema>) => {
     console.log(values);
-    
+
     setLoading(true);
     try {
-      const response = await axios.post('/api/interview-prep', values);
+      const response = await axios.post(`/api/interview-prep?userId=${session?.user?.id}`, values);
       if (!response) throw new Error('Failed to submit the form');
       if (response.status === 200 && response.data) {
         console.log(response.data);
+        setInterviewData(response.data);
       }
     } catch (error) {
       console.error(error);
@@ -66,26 +75,16 @@ export default function InterviewPage() {
   const [inProgress, setInProgress] = useState<{ [key: string]: boolean }>({}); // Track progress per card
 
   const topics = [
-    { id: 1, name: 'JavaScript', level: 'Easy', description: 'JavaScript is a versatile language used for web development. Preparing for a JavaScript interview can help you understand the fundamentals of programming and web technologies.' },
-    { id: 2, name: 'Python', level: 'Easy', description: 'Python is a popular language for data science and web development. An interview in Python can help you grasp basic programming concepts and problem-solving skills.' },
-    { id: 3, name: 'Java', level: 'Medium', description: 'Java is widely used in enterprise environments. Preparing for a Java interview can enhance your understanding of object-oriented programming and large-scale system design.' },
-    { id: 4, name: 'C#', level: 'Medium', description: 'C# is commonly used for developing Windows applications. An interview in C# can help you learn about .NET framework and software development principles.' },
-    { id: 5, name: 'Ruby', level: 'Medium', description: 'Ruby is known for its simplicity and productivity. Preparing for a Ruby interview can improve your skills in web development and scripting.' },
-    { id: 6, name: 'TypeScript', level: 'Medium', description: 'TypeScript is a superset of JavaScript that adds static types. An interview in TypeScript can help you write more robust and maintainable code.' },
-    { id: 7, name: 'Go', level: 'Hard', description: 'Go is a statically typed language designed for system programming. Preparing for a Go interview can enhance your understanding of concurrency and performance optimization.' },
-    { id: 8, name: 'Rust', level: 'Hard', description: 'Rust is known for its memory safety and performance. An interview in Rust can help you learn about systems programming and safe concurrency.' },
-    { id: 9, name: 'Kotlin', level: 'Medium', description: 'Kotlin is used for Android development and is fully interoperable with Java. Preparing for a Kotlin interview can improve your mobile development skills.' },
-    { id: 10, name: 'Swift', level: 'Medium', description: 'Swift is the language for iOS and macOS development. An interview in Swift can help you learn about mobile app development and Apple’s ecosystem.' },
-    { id: 11, name: 'PHP', level: 'Easy', description: 'PHP is widely used for server-side web development. Preparing for a PHP interview can help you understand web server scripting and backend development.' },
-    { id: 12, name: 'Scala', level: 'Hard', description: 'Scala combines object-oriented and functional programming. An interview in Scala can help you learn about scalable and concurrent applications.' },
-    { id: 13, name: 'Elixir', level: 'Hard', description: 'Elixir is known for its concurrency and fault tolerance. Preparing for an Elixir interview can enhance your skills in building scalable and maintainable applications.' },
-    { id: 14, name: 'Next.js', level: 'Medium', description: 'Next.js is a React framework for server-side rendering. An interview in Next.js can help you learn about modern web development and performance optimization.' },
-    { id: 15, name: 'NestJS', level: 'Medium', description: 'NestJS is a framework for building scalable server-side applications. Preparing for a NestJS interview can improve your skills in backend development and TypeScript.' },
-    { id: 16, name: 'GraphQL', level: 'Medium', description: 'GraphQL is a query language for APIs. An interview in GraphQL can help you learn about efficient data fetching and API design.' },
-    { id: 17, name: 'Docker', level: 'Medium', description: 'Docker is a platform for containerizing applications. Preparing for a Docker interview can enhance your understanding of containerization and DevOps practices.' },
-    { id: 18, name: 'Kubernetes', level: 'Hard', description: 'Kubernetes is an orchestration platform for containerized applications. An interview in Kubernetes can help you learn about managing and scaling applications in production.' },
-    { id: 19, name: 'Terraform', level: 'Hard', description: 'Terraform is an infrastructure as code tool. Preparing for a Terraform interview can improve your skills in automating infrastructure provisioning and management.' },
-    { id: 20, name: 'AWS', level: 'Hard', description: 'AWS is a comprehensive cloud computing platform. An interview in AWS can help you learn about cloud services, architecture, and best practices.' },
+    { id: 1, role: 'Frontend Developer', description: 'JavaScript, TypeScript', experience: '1-3' },
+    { id: 2, role: 'Backend Developer', description: 'Python, Java', experience: '2-4' },
+    { id: 3, role: 'Full Stack Developer', description: 'JavaScript, Ruby', experience: '3-5' },
+    { id: 4, role: 'Mobile Developer', description: 'Swift, Kotlin', experience: '2-4' },
+    { id: 5, role: 'DevOps Engineer', description: 'Go, Rust', experience: '3-5' },
+    { id: 6, role: 'Data Scientist', description: 'Python, R', experience: '2-4' },
+    { id: 7, role: 'System Administrator', description: 'Bash, Python', experience: '3-5' },
+    { id: 8, role: 'Cloud Engineer', description: 'AWS, Terraform', experience: '3-5' },
+    { id: 9, role: 'Security Engineer', description: 'Python, C', experience: '3-5' },
+    { id: 10, role: 'Machine Learning Engineer', description: 'Python, Java', experience: '2-4' },
   ];
 
 
@@ -96,47 +95,99 @@ export default function InterviewPage() {
 
   return (
     <main className='w-full'>
-      <div className='w-full flex items-center justify-center text-5xl font-mono py-5'>
-        <h3>Mock Interview</h3>
+      <div className='w-full flex flex-col text-5xl gap-y-3 py-5'>
+        <h3>Ai Mock Interview</h3>
+      <p className="text-lg ">Prepare for your dream job with our mock interview platform. Practice and improve your skills to ace your next interview!</p>
       </div>
-      <div className='grid grid-cols-3 gap-12 w-full'>
+
+
+      {/* Your previous interview */}
+      <div className='flex flex-col gap-y-5'>
+        <h1 className="text-2xl font-bold mb-4">Start New Interview</h1>
         <Card
           onClick={openDialog}
-          className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-4"
+          className="cursor-pointer w-fit p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-4"
         >
           <PlusIcon className="w-6 h-6" />
           <span className=" font-semibold">Add jobs cretria</span>
         </Card>
-        {
-          topics.map((topic) => (
-            <Card
-              key={topic.id}
-              className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col gap-y-4"
-            >
-              <div className='flex justify-between items-center w-full'>
-                <div className='flex items-center gap-x-3'>
-                  {inProgress[topic.name] ? (
-                    <div className="w-6 h-6 animate-spin border-4 border-t-4 border-blue-500 border-solid rounded-full" /> // Loading spinner
-                  ) : (
-                    <PlayIcon className="w-6 h-6" />
-                  )}
-                  <span className="font-semibold">{topic.name}</span>
-                </div>
-                <span className={`text-sm px-2 rounded-full font-bold border-2 ${topic.level === 'Easy' ? 'bg-green-100 text-green-500  border-green-500' : topic.level === 'Medium' ? 'bg-yellow-100 text-yellow-500  border-yellow-500' : 'bg-red-100 text-red-500  border-red-500'}`}>
-                  {topic.level}
-                </span>
-              </div>
-              <p className="text-gray-700">{topic.description}</p>
-              <Button
-                onClick={() => handleStart(topic.name)}
-                className="ml-auto"
-              >
-                {inProgress[topic.name] ? 'In Progress' : 'Start'}
-              </Button>
-            </Card>
-          ))
-        }
+        <h1 className="text-2xl font-bold mb-4">Your Previous Interview</h1>
+
+        <div className='grid grid-cols-3 gap-12 w-full'>
+          {
+            interviewData.length == 0 ? (
+              <div className='text-xl mb-5 ml-5'>No interview data found</div>
+            ) :
+
+              interviewData.map((topic: InterviewData) => (
+                <Card
+                  key={topic.id}
+                  className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col gap-y-4"
+                >
+                  <div className='flex justify-between items-center w-full'>
+                    <div className='flex items-center gap-x-3'>
+                      {inProgress[topic.role] ? (
+                        <div className="w-6 h-6 animate-spin border-4 border-t-4 border-blue-500 border-solid rounded-full" /> // Loading spinner
+                      ) : (
+                        <PlayIcon className="w-6 h-6" />
+                      )}
+                      <span className="font-semibold">{topic.role}</span>
+                    </div>
+                    <span className="text-sm px-2 rounded-full font-bold border-2 bg-blue-100 text-blue-500 border-blue-500">
+                      {topic.experience} years
+                    </span>
+                  </div>
+                  <p className="text-gray-700">description: {topic.description}</p>
+                  <Button
+                    onClick={() => handleStart(topic.role)}
+                    className="ml-auto"
+                  >
+                    {inProgress[topic.role] ? 'In Progress' : 'Start'}
+                  </Button>
+                </Card>
+              ))
+          }
+        </div>
       </div>
+      {/* Custom Generated*/}
+      <div className='flex flex-col gap-y-5'>
+        <h1 className="text-2xl font-bold mb-4">Custom Interviews</h1>
+        <div className='grid grid-cols-3 gap-12 w-full'>
+          {
+            topics.map((topic) => (
+              <Card
+                key={topic.id}
+                className="cursor-pointer p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col gap-y-4"
+              >
+                <div className='flex justify-between items-center w-full'>
+                  <div className='flex items-center gap-x-3'>
+                    {inProgress[topic.role] ? (
+                      <div className="w-6 h-6 animate-spin border-4 border-t-4 border-blue-500 border-solid rounded-full" /> // Loading spinner
+                    ) : (
+                      <PlayIcon className="w-6 h-6" />
+                    )}
+                    <span className="font-semibold">{topic.role}</span>
+                  </div>
+                  <span className="text-sm px-2 rounded-full font-bold border-2 bg-blue-100 text-blue-500 border-blue-500">
+                    {topic.experience} years
+                  </span>
+                </div>
+                <p className="text-gray-700">description: {topic.description}</p>
+                <Button
+                  onClick={() => handleStart(topic.role)}
+                  className="ml-auto"
+                >
+                  {inProgress[topic.role] ? 'In Progress' : 'Start'}
+                </Button>
+              </Card>
+            ))
+          }
+        </div>
+      </div> 
+
+
+
+      {/* FORM FILLING */}
       <div className="container mx-auto p-4">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogOverlay className="fixed inset-0 bg-black bg-opacity-30 z-50" />
@@ -149,35 +200,6 @@ export default function InterviewPage() {
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                {/* Name */}
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
                 {/* Role */}
                 <FormField
@@ -185,9 +207,24 @@ export default function InterviewPage() {
                   name="role"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Role</FormLabel>
+                      <FormLabel>Job Role / Job Position</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your role" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Job Description */}
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Job Description</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Write a brief job description" rows={4} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -200,7 +237,7 @@ export default function InterviewPage() {
                   name="experience"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Experience</FormLabel>
+                      <FormLabel>Year of Experience</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your years of experience" {...field} />
                       </FormControl>
@@ -209,7 +246,7 @@ export default function InterviewPage() {
                   )}
                 />
 
-                {/* Language */}
+                {/* Language
                 <FormField
                   control={form.control}
                   name="language"
@@ -236,22 +273,9 @@ export default function InterviewPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                {/* Job Description */}
-                <FormField
-                  control={form.control}
-                  name="jobDescription"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Job Description</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Write a brief job description" rows={4} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
 
                 {/* Submit Button */}
                 <div className="text-center">

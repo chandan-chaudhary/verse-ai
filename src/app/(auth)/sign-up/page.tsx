@@ -48,7 +48,7 @@ export default function SignupPage() {
                     <CardTitle>Sign Up</CardTitle>
                 </CardHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className=" text-white">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="">
                         <CardContent className="space-y-4">
                             {/* Email Field */}
                             <FormField
@@ -96,7 +96,7 @@ export default function SignupPage() {
                             />
                         </CardContent>
                         <CardFooter className="flex justify-between">
-                            <Button variant={'link'} onClick={() => router.push('/sign-in')} className="text-white">Already have an account?</Button>
+                            <Button variant={'link'} onClick={() => router.push('/sign-in')} className="">Already have an account?</Button>
                             <Button type="submit">Sign Up</Button>
                         </CardFooter>
                     </form>

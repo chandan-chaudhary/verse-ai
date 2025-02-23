@@ -28,7 +28,7 @@ export default function Headers() {
     return (
         <main className="pt-12 relative flex items-center ">
             <h1 className="absolute -left-80 text-4xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-700 via-fuchsia-500 to-fuchsia-800">
-                AI-VERSE
+                verse.AI
             </h1>
             <Menubar className="py-6 rounded-full w-fit bg-gray-50 bg-opacity-25 border-none text-black backdrop-blur-3xl">
                 <MenubarMenu>

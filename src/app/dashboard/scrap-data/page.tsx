@@ -54,9 +54,9 @@ export default function WebScraping() {
     }
     // https://www.bbc.com/news
     return (
-        <main className="flex gap-4 p-4 w-full ">
+        <main className="flex border-r-2 p-4 w-full ">
             {/* History and Add New URL Section */}
-            <div className="flex flex-col bg-gray-800 text-white p-4 rounded-lg shadow-lg h-[700px] overflow-y-scroll w-[500px]">
+            <div className="flex flex-col bg-gray-950 text-white p-4 rounded-l-lg shadow-lg h-[700px]  w-[500px]">
                 <h2 className="text-2xl font-bold mb-4">Scrape URL</h2>
                 <form onSubmit={(event) => {
                     event.preventDefault();
@@ -91,7 +91,7 @@ export default function WebScraping() {
                 </div> */}
             </div>
             {/* Terminal Section */}
-            <div className="flex flex-col bg-black text-green-400 p-4 rounded-lg shadow-lg w-full">
+            <div className="flex flex-col bg-black text-green-400 p-4 rounded-r-lg shadow-lg w-full">
                 <div className="flex flex-col gap-2 overflow-y-auto flex-grow">
                     {/* {lines.map((line, idx) => ( */}
                         <div >{lines[lines.length -1]}</div>

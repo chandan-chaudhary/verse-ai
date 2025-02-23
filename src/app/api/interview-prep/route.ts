@@ -1,3 +1,4 @@
+import { prisma } from "@/db/db";
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -39,7 +40,11 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { userId: number } }
+) {
+  const { userId } = params;
   const ip =
     request.headers.get("x-forwarded-for") ||
     request.headers.get("remote-addr") ||
@@ -52,10 +57,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name, email, experience, jobDescription, role, language } =
-    await request.json();
+  const { experience, description, role } = await request.json();
 
-  if (!name || !email || !experience || !jobDescription || !role || !language) {
+  if (!userId) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+
+  if (!experience || !description || !role) {
     return NextResponse.json(
       { error: "Please provide all the required fields" },
       { status: 400 }
@@ -63,14 +71,11 @@ export async function POST(request: NextRequest) {
   }
 
   const prompt = `
-    Generate interview questions for a candidate with the following details:
-    Name: ${name}
-    Email: ${email}
+    Generate interview questions with answer in json format for a candidate with the following details:
     Years of Experience: ${experience}
-    Job Description: ${jobDescription}
+    Job Description: ${description}
     Role: ${role}
-    Programming Languages: ${language}
-    Minimum 5 questions and increase the difficulty level based on the experience and role of the candidate.
+    Minimum 5 questions and maximum 12 question and increase the difficulty level of question based on the experience and role of the candidate.
   `;
 
   try {
@@ -83,16 +88,24 @@ export async function POST(request: NextRequest) {
     });
     console.log(response);
 
-    if(!response.choices[0].message.content)
+    if (!response.choices[0].message.content)
       return NextResponse.json(
         { error: "Failed to generate interview questions. Please try again." },
         { status: 500 }
       );
 
-    return NextResponse.json(
-      {
-        data: response.choices[0].message.content,
+      // Save the interview data to the database
+    const newInterview = await prisma.interview.create({
+      data: {
+        experience,
+        description: description,
+        role,
+        generatedResponse: response.choices[0].message.content,
+        userId: userId,
       },
+    });
+    return NextResponse.json(
+      newInterview,
       { status: 200 }
     );
   } catch (error) {

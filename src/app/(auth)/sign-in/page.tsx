@@ -40,13 +40,13 @@ export default function SignInPage() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen text-white">
+        <div className="flex justify-center items-center min-h-screen">
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
                 </CardHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className=" text-white">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="">
                         <CardContent className="space-y-4">
                             {/* Email Field */}
                             <FormField
@@ -79,7 +79,7 @@ export default function SignInPage() {
                             />
                         </CardContent>
                         <CardFooter className="flex justify-between">
-                            <Button variant={'link'} onClick={() => router.push('/sign-up')} className="text-white" >Create an account</Button>
+                            <Button variant={'link'} onClick={() => router.push('/sign-up')} className="" >Create an account</Button>
                             <Button type="submit">Sign In</Button>
                         </CardFooter>
                     </form>
