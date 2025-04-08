@@ -63,6 +63,7 @@ export default function UserMediaControl() {
     recognition.onresult = (event: SpeechRecognition) => {
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
+          console.log('Final transcript: ', event.results[i][0].transcript);
           setTranscript(prev => prev + event.results[i][0].transcript);
         }
       }
@@ -125,10 +126,14 @@ export default function UserMediaControl() {
           </Button>
         </div>
       </div>
-      <div className="mt-4">
-        <h2>Transcript:</h2>
-        <p>{transcript}</p>
-      </div>
+      {
+        transcript && (
+          <div className="mt-4">
+            <h2>Transcript:</h2>
+            <p>{transcript}</p>
+          </div>
+        )
+      }
     </div>
   );
 }

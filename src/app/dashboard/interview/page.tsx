@@ -6,7 +6,7 @@ import { PlayIcon, PlusIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+// import axios from 'axios';
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 
 interface InterviewData {
   id: number;
@@ -39,7 +39,7 @@ export default function InterviewPage() {
   const [interviewData, setInterviewData] = useState<InterviewData[]>([]);
   const router = useRouter();
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof formDataSchema>>({
     resolver: zodResolver(formDataSchema),
@@ -52,21 +52,27 @@ export default function InterviewPage() {
 
   const onSubmit = async (values: z.infer<typeof formDataSchema>) => {
     console.log(values);
+    setInterviewData([]);
 
     setLoading(true);
-    try {
-      const response = await axios.post(`/api/interview-prep?userId=${session?.user?.id}`, values);
-      if (!response) throw new Error('Failed to submit the form');
-      if (response.status === 200 && response.data) {
-        console.log(response.data);
-        setInterviewData(response.data);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
+    setTimeout(() => {
+      closeDialog();
       setLoading(false);
-      setIsOpen(false); // Close the dialog after submitting the form
-    }
+      router.push(`/dashboard/interview/${1}`);
+    }, 2000);
+    // try {
+    //   const response = await axios.post(`/api/interview-prep?userId=${session?.user?.id}`, values);
+    //   if (!response) throw new Error('Failed to submit the form');
+    //   if (response.status === 200 && response.data) {
+    //     console.log(response.data);
+        // setInterviewData(response.data);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // } finally {
+    //   setLoading(false);
+    //   setIsOpen(false); // Close the dialog after submitting the form
+    // }
   };
 
   const openDialog = () => setIsOpen(true);
@@ -97,7 +103,7 @@ export default function InterviewPage() {
     <main className='w-full'>
       <div className='w-full flex flex-col text-5xl gap-y-3 py-5'>
         <h3>Ai Mock Interview</h3>
-      <p className="text-lg ">Prepare for your dream job with our mock interview platform. Practice and improve your skills to ace your next interview!</p>
+        <p className="text-lg ">Prepare for your dream job with our mock interview platform. Practice and improve your skills to ace your next interview!</p>
       </div>
 
 
@@ -183,7 +189,7 @@ export default function InterviewPage() {
             ))
           }
         </div>
-      </div> 
+      </div>
 
 
 
